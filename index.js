@@ -1,20 +1,29 @@
+require("./db/config");
 const mongoose =  require("mongoose")
 const express = require('express')
-require("./db/config");
+const cors =  require("cors")
 const User = require("./db/User");
+
 
 
 const app = express()
 app.use(express.json());
+app.use(cors())
 
+app.get('/', (req, res) => {
+    res.send('WELCOME')
+})
 
 app.post('/register', async (req, res) => {
     let user = new User(req.body)
     let result = await user.save()
     res.send(result)
 })
+app.get('/', (req, res) => {
+    res.send('WELCOME')
+})
 
-app.get('/register', (req, res) => {
+app.get('/login', (req, res) => {
     res.send('WELCOME')
 })
 
@@ -29,6 +38,6 @@ app.get('/register', (req, res) => {
 // })
 
 // connectDB
-app.listen(5000, () => {
+app.listen(8000, () => {
     console.log('Server is up and running')
 })  
