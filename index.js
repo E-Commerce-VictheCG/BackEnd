@@ -1,6 +1,8 @@
 require("./db/config");
 const mongoose =  require("mongoose")
 const express = require('express')
+const userRoute = require('./db/Users/Routes/user_routes')
+// const User = require("./db/userModel");
 const cors =  require("cors")
 const User = require("./db/User");
 
@@ -9,10 +11,6 @@ const User = require("./db/User");
 const app = express()
 app.use(express.json());
 app.use(cors())
-
-app.get('/', (req, res) => {
-    res.send('WELCOME')
-})
 
 app.post('/register', async (req, res) => {
     let user = new User(req.body)
