@@ -3,13 +3,20 @@ const mongoose =  require("mongoose")
 const express = require('express')
 const userRoute = require('./db/Users/Routes/user_routes')
 // const User = require("./db/userModel");
+const cors =  require("cors")
+const User = require("./db/User");
+
 
 
 const app = express()
 app.use(express.json());
+app.use(cors())
 
 app.use("/auth", userRoute)
 
+app.get('/', (req, res) => {
+    res.send('WELCOME')
+})
 
 app.get('/', (req, res) => {
 
@@ -27,6 +34,6 @@ app.get('/', (req, res) => {
 // })
 
 // connectDB
-app.listen(5000, () => {
+app.listen(8000, () => {
     console.log('Server is up and running')
 })  
