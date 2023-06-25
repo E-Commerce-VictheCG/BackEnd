@@ -3,17 +3,26 @@ const mongoose =  require("mongoose")
 const express = require('express')
 const userRoute = require('./db/Users/Routes/user_routes')
 // const User = require("./db/userModel");
+const cors =  require("cors")
+const User = require("./db/User");
+
 
 
 const app = express()
 app.use(express.json());
+app.use(cors())
 
-app.use("/auth", userRoute)
-
-
+app.post('/register', async (req, res) => {
+    let user = new User(req.body)
+    let result = await user.save()
+    res.send(result)
+})
 app.get('/', (req, res) => {
+    res.send('WELCOME')
+})
 
-    res.send("Welome!!!")
+app.get('/login', (req, res) => {
+    res.send('WELCOME')
 })
 
 
@@ -27,6 +36,6 @@ app.get('/', (req, res) => {
 // })
 
 // connectDB
-app.listen(5000, () => {
+app.listen(8000, () => {
     console.log('Server is up and running')
 })  
