@@ -4,7 +4,7 @@ const express = require('express')
 const userRoute = require('./db/Users/Routes/user_routes')
 // const User = require("./db/userModel");
 const cors =  require("cors")
-const User = require("./db/User");
+const User = require("./db/userModal");
 
 
 

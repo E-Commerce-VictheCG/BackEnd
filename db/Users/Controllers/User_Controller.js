@@ -1,4 +1,4 @@
-const UserModel = require("../../userModel");
+const UserModel = require("../../userModal");
 
 
 const HandleUserRegister = async(req, res) => {
@@ -36,14 +36,11 @@ const HandleUserRegister = async(req, res) => {
     // res.send(result)
 }
 const HandleUserLogin = async (req, res) => {
-    const {email, password} = req.body;
 
     try {
-        const user = await UserModel.findOne({email, password});
-        // let User = new UserModel(data)
-        // newUser = await newUser.save();
+    const {email, password} = req.body;
+        const user = await UserModel.findOne({email, password}).select('-password');
         return(
-            // res.send(user.select("-password"))
             res.status(200).json({
                 message: 'Succesuful',
                 success: true,
