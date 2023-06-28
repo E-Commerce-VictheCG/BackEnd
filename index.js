@@ -4,13 +4,15 @@ const express = require('express')
 const userRoute = require('./db/Users/Routes/user_routes')
 // const User = require("./db/userModel");
 const cors =  require("cors")
-const User = require("./db/User");
+const User = require("./db/userModal");
 
 
 
 const app = express()
 app.use(express.json());
 app.use(cors())
+
+app.use("/auth", userRoute)
 
 app.post('/register', async (req, res) => {
     let user = new User(req.body)
@@ -21,8 +23,9 @@ app.get('/', (req, res) => {
     res.send('WELCOME')
 })
 
-app.get('/login', (req, res) => {
-    res.send('WELCOME')
+app.get('/', (req, res) => {
+
+    res.send("Welome!!!")
 })
 
 
