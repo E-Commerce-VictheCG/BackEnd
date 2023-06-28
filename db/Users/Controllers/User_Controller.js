@@ -36,27 +36,24 @@ const HandleUserRegister = async(req, res) => {
     // res.send(result)
 }
 const HandleUserLogin = async (req, res) => {
-
-    try {
     const {email, password} = req.body;
-        const user = await UserModel.findOne({email, password}).select('-password');
-        return(
-            res.status(200).json({
-                message: 'Succesuful',
-                success: true,
-                statusCode: 200,
-                user
-            }));
-    }catch(error){
-        console.log(error)
-        return(
-            res.status(401).json({  
-                message: 'Login Unsuccesuful',
-                error,
-                success: false,
-                statusCode: 401
-            })
-        )
+
+
+    const user = await UserModel.findOne({email, password}).select('-password');
+    if(user) {
+        res.status(200).json({
+            message: 'Succesuful',
+            success: true,
+            statusCode: 200,
+            user
+        });
+    }
+    else{
+        res.status(401).json({  
+            message: 'Login Unsuccesuful; incorrect username or password',
+            success: false,
+            statusCode: 401
+        })
     }
     
     // let result = await user.save()
