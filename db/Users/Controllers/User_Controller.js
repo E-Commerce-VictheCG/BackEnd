@@ -16,8 +16,9 @@ const HandleUserRegister = async(req, res) => {
     try {
         let newUser = new UserModel(data)
         newUser = await newUser.save();
+        const newUserName = newUser.name
         return(res.status(500).json({
-            message: 'Succesuful',
+            message: 'Succesuful; We are happy to have you, ' + newUserName,
             success: true,
             statusCode: 200,
             newUser
@@ -41,8 +42,9 @@ const HandleUserLogin = async (req, res) => {
 
     const user = await UserModel.findOne({email, password}).select('-password');
     if(user) {
+        const userName = user.name
         res.status(200).json({
-            message: 'Succesuful',
+            message: `Welcome Back, ${userName}`,
             success: true,
             statusCode: 200,
             user
