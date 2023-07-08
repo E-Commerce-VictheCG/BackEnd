@@ -16,16 +16,19 @@ const HandleUserRegister = async(req, res) => {
     try {
         let newUser = new UserModel(data)
         newUser = await newUser.save();
+        newUser = newUser.toObject()
+        delete newUser.password
         const newUserName = newUser.name
-        return(res.status(500).json({
-            message: 'Succesuful; We are happy to have you, ' + newUserName,
+        console.log(newUser)
+        return(res.send({
+            message: `Succesuful; We are happy to have you, ${newUserName}`,
             success: true,
             statusCode: 200,
             newUser
         }))
     }catch(error){
         console.log(error);
-        res.status(500).json({
+        res.send({
             message: "Registration unsuccessful!",
             success: false,
             error,
@@ -38,20 +41,20 @@ const HandleUserRegister = async(req, res) => {
 }
 const HandleUserLogin = async (req, res) => {
     const {email, password} = req.body;
-
-
     const user = await UserModel.findOne({email, password}).select('-password');
+    console.log(user)
     if(user) {
-        const userName = user.name
-        res.status(200).json({
-            message: `Welcome Back, ${userName}`,
+        const userName = user.name;
+        console.log(userName)
+        res.send({
+            user,
+            message: `Welcome Back, ${userName}`,   
             success: true,
             statusCode: 200,
-            user
-        });
+        })
     }
     else{
-        res.status(401).json({  
+        res.send({  
             message: 'Login Unsuccesuful; incorrect username or password',
             success: false,
             statusCode: 401
